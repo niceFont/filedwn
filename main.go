@@ -22,7 +22,7 @@ var client = http.Client{Timeout: time.Duration(1 * time.Hour)}
 func Download(url string) {
 
 	url = Extract(url)
-	req, err := http.NewRequest("GET", url, nil)
+	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Accept", "image/*,video/webm")
 	resp, err := client.Do(req)
 
@@ -83,7 +83,7 @@ func Extract(url string) string {
 // Filter sends get request to url and filters for image url's
 func Filter(url string) {
 	fmt.Println(url)
-	req, err := http.NewRequest("GET", url, nil)
+	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Accept", "image/*,video/webm")
 	resp, err := client.Do(req)
 
@@ -106,7 +106,7 @@ func Filter(url string) {
 
 	foundImages := regImages.FindAllString(final, -1)
 
-	if len(foundAnchors) == 0 || len(foundImages) == 0 {
+	if len(foundAnchors) == 0 && len(foundImages) == 0 {
 		log.Println("Nothing Found")
 		return
 	}
